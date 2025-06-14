@@ -10,9 +10,11 @@ public class ball : MonoBehaviour
     public float minBallSpeed = 7f;
     public float paddleVelocityInfluence = 0.5f;
 
-    // NEW: Variable for the specific speed the paddle launches the ball with
     public float paddleLaunchSpeed = 10f; // Set a default value, adjust in Inspector
-    public float wallBounceSpeed = 20f; // Set a default value, adjust in Inspector
+    public float wallBounceSpeed = 15f; // Set a default value, adjust in Inspector
+
+    // NEW: Maximum speed the ball can travel
+    public float maxBallSpeed = 50f; // Set your desired max speed here, adjust in Inspector
 
     public Transform playerPaddle; // Reference to the player's paddle script
 
@@ -89,17 +91,20 @@ public class ball : MonoBehaviour
 
                 // --- PADDLE PUSH LOGIC ---
 
-                // Use the new paddleLaunchSpeed here for the base push
-                Vector3 newVelocity = collisionNormal * paddleLaunchSpeed; // Using paddleLaunchSpeed instead of minBallSpeed
+                Vector3 newVelocity = collisionNormal * paddleLaunchSpeed;
                 newVelocity += (paddleRb.linearVelocity * paddleVelocityInfluence);
                 newVelocity *= ballSpeedMultiplier;
 
-                // Final check to ensure the ball maintains a minimum speed.
-                // This is still important as paddleVelocityInfluence or ballSpeedMultiplier
-                // could potentially reduce the speed below minBallSpeed.
+                // Ensure the ball maintains a minimum speed.
                 if (newVelocity.magnitude < minBallSpeed)
                 {
                     newVelocity = newVelocity.normalized * minBallSpeed;
+                }
+
+                // NEW: Clamp velocity to maximum speed after all other calculations
+                if (newVelocity.magnitude > maxBallSpeed)
+                {
+                    newVelocity = newVelocity.normalized * maxBallSpeed;
                 }
 
                 body.linearVelocity = newVelocity;
@@ -113,21 +118,31 @@ public class ball : MonoBehaviour
 
             if (playerPaddle != null) // Essential check to prevent NullReferenceException
             {
-                // Calculate the direction from the ball to the player's paddle, offset by playerHeight
                 Vector3 destination = playerPaddle.position + Vector3.up * playerHeight;
                 Vector3 directionToPlayer = (destination - transform.position).normalized;
 
-                // Wall hits still launch at paddleLaunchSpeed, homing towards the player.
-                Vector3 newVelocity = directionToPlayer * wallBounceSpeed;
+                Vector3 newVelocity = directionToPlayer * wallBounceSpeed; // Using wallBounceSpeed
+
+                // Ensure the ball maintains a minimum speed (redundant if wallBounceSpeed >= minBallSpeed but good for safety)
+                if (newVelocity.magnitude < minBallSpeed)
+                {
+                    newVelocity = newVelocity.normalized * minBallSpeed;
+                }
+
+                // NEW: Clamp velocity to maximum speed after all other calculations
+                if (newVelocity.magnitude > maxBallSpeed)
+                {
+                    newVelocity = newVelocity.normalized * maxBallSpeed;
+                }
 
                 body.linearVelocity = newVelocity;
                 body.angularVelocity = Vector3.zero; // Stop spin for predictable homing
 
-                Debug.Log("Ball hit wall and is now homing towards player with min speed!");
+                Debug.Log("Ball hit wall and is now homing towards player with defined speed!");
             }
             else
             {
-                // Fallback: If playerPaddle is NOT assigned, reflect as before, but with min speed guarantee.
+                // Fallback: If playerPaddle is NOT assigned, reflect as before, but with min/max speed guarantee.
                 Vector3 collisionNormal = collision.contacts[0].normal;
                 Vector3 reflectedVelocity = Vector3.Reflect(body.linearVelocity, collisionNormal);
 
@@ -135,6 +150,12 @@ public class ball : MonoBehaviour
                 if (reflectedVelocity.magnitude < minBallSpeed)
                 {
                     reflectedVelocity = reflectedVelocity.normalized * minBallSpeed;
+                }
+
+                // NEW: Clamp reflected velocity to maximum speed
+                if (reflectedVelocity.magnitude > maxBallSpeed)
+                {
+                    reflectedVelocity = reflectedVelocity.normalized * maxBallSpeed;
                 }
 
                 body.linearVelocity = reflectedVelocity;
