@@ -10,7 +10,8 @@ public class ball : MonoBehaviour
     public float minBallSpeed = 7f;
     public float paddleVelocityInfluence = 0.5f;
 
-    public pad playerPaddle; // Reference to the player's paddle script
+    public Transform playerPaddle; // Reference to the player's paddle script
+    public float playerHeight = 1;
 
     public Transform ballResetPosition;
     private Vector3 initialBallPosition;
@@ -30,6 +31,8 @@ public class ball : MonoBehaviour
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
         body.angularDamping = 1.0f; // Fixed: Changed from angularDamping to angularDrag
+
+        playerPaddle = Camera.main.transform;
 
         // Check to ensure playerPaddle is assigned in the Inspector
         if (playerPaddle == null)
@@ -108,10 +111,11 @@ public class ball : MonoBehaviour
                 float baseOutgoingMagnitude = Mathf.Max(currentBallSpeed, minBallSpeed);
 
                 // Calculate the direction from the ball to the player's paddle
-                Vector3 directionToPlayer = (playerPaddle.transform.position - transform.position).normalized;
+                Vector3 destination = playerPaddle.position + Vector3.up * playerHeight;
+                Vector3 directionToPlayer = (destination - transform.position).normalized;
 
                 Vector3 newVelocity = directionToPlayer * baseOutgoingMagnitude;
-                newVelocity *= ballSpeedMultiplier; // Apply game speed progression
+                //newVelocity *= ballSpeedMultiplier; // Apply game speed progression
 
                 if (newVelocity.magnitude < minBallSpeed)
                 {

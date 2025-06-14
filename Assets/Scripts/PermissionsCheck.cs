@@ -44,13 +44,13 @@ namespace UnityEngine.XR.OpenXR.Features.Meta.Tests
         void OnPermissionDenied(string permission)
         {
             Debug.LogWarning($"User denied permission for: {m_PermissionId}");
-            m_PermissionDenied.Invoke(permission);
+            m_PermissionDenied.Invoke("Denied:"+permission);
         }
 
         void OnPermissionGranted(string permission)
         {
             Debug.Log($"User granted permission for: {m_PermissionId}");
-            m_PermissionGranted.Invoke(permission);
+            m_PermissionGranted.Invoke("Granted:"+permission);
         }
 #endif // UNITY_ANDROID
     }
