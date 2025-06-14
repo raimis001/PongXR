@@ -1,253 +1,145 @@
 // ball.cs
 
 using UnityEngine;
-
 using UnityEngine.InputSystem; // Keep this if needed elsewhere, otherwise optional for this script.
 
-
-
 public class ball : MonoBehaviour
-
 {
-
     public float initialBallForce = 50f;
-
     public float ballSpeedMultiplier = 1.1f;
-
     public float minBallSpeed = 7f;
-
     public float paddleVelocityInfluence = 0.5f;
 
+    // NEW: Variable for the specific speed the paddle launches the ball with
+    public float paddleLaunchSpeed = 10f; // Set a default value, adjust in Inspector
 
     public Transform playerPaddle; // Reference to the player's paddle script
 
-    public float playerHeight = 1;
-
+    public float playerHeight = 1f;
 
     public Transform ballResetPosition;
-
     private Vector3 initialBallPosition;
-
     private Quaternion initialBallRotation;
-
 
     private Rigidbody body; // Reference to the ball's Rigidbody component
 
-
     void Start()
-
     {
-
         body = GetComponent<Rigidbody>();
-
         body.useGravity = false;
-
         body.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
-
         initialBallPosition = transform.position;
-
         initialBallRotation = transform.rotation;
 
-
         body.linearVelocity = Vector3.zero;
-
         body.angularVelocity = Vector3.zero;
+        body.angularDamping = 1.0f; // As per your working code
 
-        body.angularDamping = 1.0f; // Fixed: Changed from angularDamping to angularDrag
-
-
+        // This line makes the ball home to the main camera's position.
+        // If your actual paddle is a separate GameObject, you might want to assign it
+        // in the Inspector instead, or find it by tag.
         playerPaddle = Camera.main.transform;
 
-
-        // Check to ensure playerPaddle is assigned in the Inspector
-
+        // Check to ensure playerPaddle is assigned (will log error if Camera.main is null)
         if (playerPaddle == null)
-
         {
-
-            Debug.LogError("Player Paddle (pad) reference not set on " + gameObject.name + " ball script! Ball will not home towards player from walls.");
-
+            Debug.LogError("Player Paddle (Camera.main) not found or assigned! Homing will not work for " + gameObject.name + ".");
         }
-
     }
-
 
     public void DropBall()
-
     {
-
         body.linearVelocity = Vector3.zero;
-
         body.angularVelocity = Vector3.zero;
-
         body.useGravity = true; // Enable gravity for dropping
-
-
-        // Removed the initial AddForce for dropping in place, as per previous discussion.
-
-        // If you want it to launch forward again, uncomment this:
-
-        // body.AddForce(transform.forward * initialBallForce, ForceMode.Impulse);
-
     }
-
 
     public void ResetBall()
-
     {
-
         body.linearVelocity = Vector3.zero;
-
         body.angularVelocity = Vector3.zero;
-
         body.useGravity = false;
 
-
         if (ballResetPosition != null)
-
         {
-
             transform.position = ballResetPosition.position;
-
             transform.rotation = ballResetPosition.rotation;
-
         }
-
         else
-
         {
-
             transform.position = initialBallPosition;
-
             transform.rotation = initialBallRotation;
-
         }
-
         Debug.Log("Ball reset!");
-
     }
 
-
     // Called when this collider/rigidbody has begun touching another rigidbody/collider.
-
     void OnCollisionEnter(Collision collision)
-
     {
-
         if (collision.gameObject.CompareTag("Paddle"))
-
         {
-
             Rigidbody paddleRb = collision.rigidbody; // Get the Rigidbody component of the collided paddle
 
-
             if (paddleRb != null)
-
             {
-
                 ContactPoint contact = collision.contacts[0];
-
                 Vector3 collisionNormal = contact.normal; // Normal points OUT from the paddle surface
-
 
                 // --- PADDLE PUSH LOGIC ---
 
-
-                float currentBallSpeed = body.linearVelocity.magnitude;
-
-                float baseOutgoingMagnitude = Mathf.Max(currentBallSpeed, minBallSpeed);
-
-                Vector3 newVelocity = collisionNormal * baseOutgoingMagnitude;
-
+                // Use the new paddleLaunchSpeed here for the base push
+                Vector3 newVelocity = collisionNormal * paddleLaunchSpeed; // Using paddleLaunchSpeed instead of minBallSpeed
                 newVelocity += (paddleRb.linearVelocity * paddleVelocityInfluence);
-
                 newVelocity *= ballSpeedMultiplier;
 
-
+                // Final check to ensure the ball maintains a minimum speed.
+                // This is still important as paddleVelocityInfluence or ballSpeedMultiplier
+                // could potentially reduce the speed below minBallSpeed.
                 if (newVelocity.magnitude < minBallSpeed)
-
                 {
-
                     newVelocity = newVelocity.normalized * minBallSpeed;
-
                 }
 
-
                 body.linearVelocity = newVelocity;
-
                 body.angularVelocity = Vector3.zero; // Stop spin on paddle hit
-
             }
-
         }
-
         // Handle collisions with walls: Now with homing logic
-
         else if (collision.gameObject.CompareTag("Wall"))
-
         {
+            // --- WALL HIT LOGIC: SIMULATED HOMING HIT (SIMPLIFIED) ---
 
-            // --- WALL HIT LOGIC: SIMULATED HOMING HIT ---
-
-
-            if (playerPaddle != null) // Ensure playerPaddle reference is set
-
+            if (playerPaddle != null) // Essential check to prevent NullReferenceException
             {
-
-                float currentBallSpeed = body.linearVelocity.magnitude;
-
-                float baseOutgoingMagnitude = Mathf.Max(currentBallSpeed, minBallSpeed);
-
-
-                // Calculate the direction from the ball to the player's paddle
-
+                // Calculate the direction from the ball to the player's paddle, offset by playerHeight
                 Vector3 destination = playerPaddle.position + Vector3.up * playerHeight;
-
                 Vector3 directionToPlayer = (destination - transform.position).normalized;
 
-
-                Vector3 newVelocity = directionToPlayer * baseOutgoingMagnitude;
-
-                //newVelocity *= ballSpeedMultiplier; // Apply game speed progression
-
-
-                if (newVelocity.magnitude < minBallSpeed)
-
-                {
-
-                    newVelocity = newVelocity.normalized * minBallSpeed;
-
-                }
-
+                // Wall hits still launch at paddleLaunchSpeed, homing towards the player.
+                Vector3 newVelocity = directionToPlayer * paddleLaunchSpeed;
 
                 body.linearVelocity = newVelocity;
-
                 body.angularVelocity = Vector3.zero; // Stop spin for predictable homing
 
-
-                Debug.Log("Ball hit wall and is now homing towards player!");
-
+                Debug.Log("Ball hit wall and is now homing towards player with min speed!");
             }
-
             else
-
             {
-
-                // Fallback: If playerPaddle is NOT assigned, reflect as before.
-
+                // Fallback: If playerPaddle is NOT assigned, reflect as before, but with min speed guarantee.
                 Vector3 collisionNormal = collision.contacts[0].normal;
+                Vector3 reflectedVelocity = Vector3.Reflect(body.linearVelocity, collisionNormal);
 
-                body.linearVelocity = Vector3.Reflect(body.linearVelocity, collisionNormal);
+                // Ensure fallback reflection also has a minimum speed
+                if (reflectedVelocity.magnitude < minBallSpeed)
+                {
+                    reflectedVelocity = reflectedVelocity.normalized * minBallSpeed;
+                }
 
+                body.linearVelocity = reflectedVelocity;
                 body.angularVelocity = Vector3.zero;
-
                 Debug.LogWarning("Player Paddle not assigned to ball script! Ball reflected off wall instead of homing.");
-
             }
-
         }
-
     }
-
 }
