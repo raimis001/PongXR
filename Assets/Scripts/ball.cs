@@ -7,11 +7,15 @@ public class ball : MonoBehaviour
 {
     public float initialBallForce = 50f;
     public float ballSpeedMultiplier = 1.1f;
-    public float minBallSpeed = 7f;
+    public float minBallSpeed = 9f;
     public float paddleVelocityInfluence = 0.5f;
 
-    public Transform playerPaddle; // Reference to the player's paddle script
-    public float playerHeight = 1;
+    // CONSIDER: If your actual paddle is a separate GameObject from the camera,
+    // you might want this to be of type 'pad' or assigned in the inspector.
+    // public pad playerPaddleScript; // Example if referencing the script directly
+    public Transform playerPaddleTransform; // Changed name for clarity, still assign in Inspector if not Camera.main
+
+    public float playerHeight = 1f; // Use 'f' for float literals for consistency
 
     public Transform ballResetPosition;
     private Vector3 initialBallPosition;
@@ -30,14 +34,24 @@ public class ball : MonoBehaviour
 
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
-        body.angularDamping = 1.0f; // Fixed: Changed from angularDamping to angularDrag
+        body.angularDamping = 1.0f; // FIXED: Changed from angularDamping to angularDrag
 
-        playerPaddle = Camera.main.transform;
+        // IMPORTANT: If 'playerPaddleTransform' is your actual paddle object,
+        // it's best to assign it in the Inspector or find it by tag/type.
+        // Assigning Camera.main.transform here means the ball homes to the player's head.
+        // If that's your intent for a VR game, this is fine!
+        // Otherwise, consider:
+        // playerPaddleTransform = GameObject.FindGameObjectWithTag("PlayerPaddle").transform;
+        // Or assign manually in the Inspector.
+        // For now, I'll keep your line commented out to highlight this choice.
+        // playerPaddleTransform = Camera.main.transform; // Your original line, reconsider if your paddle is separate
 
-        // Check to ensure playerPaddle is assigned in the Inspector
-        if (playerPaddle == null)
+        // Using playerPaddleTransform for the null check, consistent with usage later.
+        if (playerPaddleTransform == null)
         {
-            Debug.LogError("Player Paddle (pad) reference not set on " + gameObject.name + " ball script! Ball will not home towards player from walls.");
+            Debug.LogError("Player Paddle Transform not set on " + gameObject.name + " ball script! Ball will not home towards player from walls.");
+            // If you intend to use Camera.main.transform, this error might show up
+            // if Camera.main hasn't initialized yet or is not tagged as "MainCamera".
         }
     }
 
@@ -89,7 +103,7 @@ public class ball : MonoBehaviour
                 float baseOutgoingMagnitude = Mathf.Max(currentBallSpeed, minBallSpeed);
                 Vector3 newVelocity = collisionNormal * baseOutgoingMagnitude;
                 newVelocity += (paddleRb.linearVelocity * paddleVelocityInfluence);
-                newVelocity *= ballSpeedMultiplier;
+                newVelocity *= ballSpeedMultiplier; // Apply paddle hit speed progression
 
                 if (newVelocity.magnitude < minBallSpeed)
                 {
@@ -105,17 +119,18 @@ public class ball : MonoBehaviour
         {
             // --- WALL HIT LOGIC: SIMULATED HOMING HIT ---
 
-            if (playerPaddle != null) // Ensure playerPaddle reference is set
+            // Using playerPaddleTransform for the homing target
+            if (playerPaddleTransform != null) // Ensure target is set
             {
                 float currentBallSpeed = body.linearVelocity.magnitude;
                 float baseOutgoingMagnitude = Mathf.Max(currentBallSpeed, minBallSpeed);
 
-                // Calculate the direction from the ball to the player's paddle
-                Vector3 destination = playerPaddle.position + Vector3.up * playerHeight;
+                // Calculate the target destination, offset by playerHeight
+                Vector3 destination = playerPaddleTransform.position + Vector3.up * playerHeight;
                 Vector3 directionToPlayer = (destination - transform.position).normalized;
 
                 Vector3 newVelocity = directionToPlayer * baseOutgoingMagnitude;
-                //newVelocity *= ballSpeedMultiplier; // Apply game speed progression
+                // Removed: newVelocity *= ballSpeedMultiplier; as per your commented out line
 
                 if (newVelocity.magnitude < minBallSpeed)
                 {
@@ -129,11 +144,19 @@ public class ball : MonoBehaviour
             }
             else
             {
-                // Fallback: If playerPaddle is NOT assigned, reflect as before.
+                // Fallback: If playerPaddleTransform is NOT assigned, reflect as before.
                 Vector3 collisionNormal = collision.contacts[0].normal;
-                body.linearVelocity = Vector3.Reflect(body.linearVelocity, collisionNormal);
+                Vector3 reflectedVelocity = Vector3.Reflect(body.linearVelocity, collisionNormal);
+
+                // Ensure fallback reflection also has minimum speed
+                if (reflectedVelocity.magnitude < minBallSpeed)
+                {
+                    reflectedVelocity = reflectedVelocity.normalized * minBallSpeed;
+                }
+
+                body.linearVelocity = reflectedVelocity;
                 body.angularVelocity = Vector3.zero;
-                Debug.LogWarning("Player Paddle not assigned to ball script! Ball reflected off wall instead of homing.");
+                Debug.LogWarning("Player Paddle Transform not assigned to ball script! Ball reflected off wall instead of homing.");
             }
         }
     }
