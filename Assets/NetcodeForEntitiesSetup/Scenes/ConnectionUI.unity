@@ -973,19 +973,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.11
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.11
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.11
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.423
+      value: -1.335
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalPosition.y
@@ -993,7 +993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.785
+      value: 3.162
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1048,12 +1048,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8351483079027885862, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
+      propertyPath: wallBounceSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8351483079027885862, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: initialBallForce
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8351483079027885862, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
-      propertyPath: ballSpeedMultiplier
+      propertyPath: paddleLaunchSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8351483079027885862, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
+      propertyPath: ballSpeedMultiplier
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8351483079027885862, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: paddleVelocityInfluence
@@ -1146,7 +1154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6580720034129227937, guid: 012d24e1c3ccf1c48a9ba7e4fd16d492, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.83768
+      value: -1.433
       objectReference: {fileID: 0}
     - target: {fileID: 6580720034129227937, guid: 012d24e1c3ccf1c48a9ba7e4fd16d492, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1549,7 +1557,7 @@ Transform:
   m_GameObject: {fileID: 1294370134}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071069}
-  m_LocalPosition: {x: -0.12, y: 2.19, z: 13.38}
+  m_LocalPosition: {x: -0.12, y: 2.19, z: 10.01}
   m_LocalScale: {x: 1, y: 4.4627, z: 22.602}
   m_ConstrainProportionsScale: 0
   m_Children: []
