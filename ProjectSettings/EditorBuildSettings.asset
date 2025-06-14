@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/NetcodeForEntitiesSetup/Scenes/ConnectionUI.unity
+    guid: 835aa8d22c3c2314588896f4a0ffd487
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/NetcodeForEntitiesSetup/Scenes/Gameplay.unity
+    guid: 9a2a8195b2523984b98f9a51ac219b5c
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 47632823c961f414885641d078ed16e0, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 59ae8afe00e2422439f846175cf15ead, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 54817168f4281a84a85ffc3a4c6c733e, type: 2}
+  m_UseUCBPForAssetBundles: 0
