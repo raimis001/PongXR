@@ -1,7 +1,6 @@
 // ball.cs
 
 using UnityEngine;
-using UnityEngine.InputSystem; // Keep this if needed elsewhere, otherwise optional for this script.
 
 public class ball : MonoBehaviour
 {
@@ -101,7 +100,7 @@ public class ball : MonoBehaviour
                     newVelocity = newVelocity.normalized * minBallSpeed;
                 }
 
-                // NEW: Clamp velocity to maximum speed after all other calculations
+                // Clamp velocity to maximum speed after all other calculations
                 if (newVelocity.magnitude > maxBallSpeed)
                 {
                     newVelocity = newVelocity.normalized * maxBallSpeed;
@@ -129,7 +128,7 @@ public class ball : MonoBehaviour
                     newVelocity = newVelocity.normalized * minBallSpeed;
                 }
 
-                // NEW: Clamp velocity to maximum speed after all other calculations
+                // Clamp velocity to maximum speed after all other calculations
                 if (newVelocity.magnitude > maxBallSpeed)
                 {
                     newVelocity = newVelocity.normalized * maxBallSpeed;
@@ -152,7 +151,7 @@ public class ball : MonoBehaviour
                     reflectedVelocity = reflectedVelocity.normalized * minBallSpeed;
                 }
 
-                // NEW: Clamp reflected velocity to maximum speed
+                // Clamp reflected velocity to maximum speed
                 if (reflectedVelocity.magnitude > maxBallSpeed)
                 {
                     reflectedVelocity = reflectedVelocity.normalized * maxBallSpeed;
@@ -163,5 +162,16 @@ public class ball : MonoBehaviour
                 Debug.LogWarning("Player Paddle not assigned to ball script! Ball reflected off wall instead of homing.");
             }
         }
+        void OnTriggerEnter(Collider other)
+        {
+            // Check if the collider that entered the trigger has the "ResetZone" tag.
+            // Make sure your cube GameObject has this tag applied in the Inspector!
+            if (other.CompareTag("ResetZone"))
+            {
+                Debug.Log("Ball entered ResetZone. Resetting ball...");
+                ResetBall(); // Call the ResetBall function defined in this script.
+            }
+        }
     }
 }
+    
