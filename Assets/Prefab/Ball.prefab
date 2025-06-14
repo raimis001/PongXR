@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8351483079027885862}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,3 +153,4 @@ MonoBehaviour:
   ballSpeedMultiplier: 5
   minBallSpeed: 7
   paddleVelocityInfluence: 0.5
+  ballResetPosition: {fileID: 0}
