@@ -15,6 +15,7 @@ public class NetworkController : MonoBehaviour
     {
         if (hand.triggerDown)
         {
+            Debug.Log("Server trigger down");
             connectionhand = hand;
             StartServer();
         }
@@ -35,7 +36,7 @@ public class NetworkController : MonoBehaviour
 
     void OnConnected()
     {
-        connectionhand.GetComponent<HandControll>().ShowText("Conected");
+        connectionhand.GetComponent<HandControll>().ShowText("Connected");
         DestroyLocalSimulationWorld();
     }
 

@@ -688,6 +688,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Address: 127.0.0.1
   NetworkPort: 7979
+--- !u!1 &663899096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5794525292500851779, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+  m_PrefabInstance: {fileID: 1994183463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &663899101
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663899096}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.3185606, y: 5.381992, z: 0.30774036}
+  m_Center: {x: 0.00049781793, y: 1.4891198, z: -0.00014285596}
+--- !u!54 &663899102
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663899096}
+  serializedVersion: 5
+  m_Mass: 20
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &721234428
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.73
+      value: 1.924
       objectReference: {fileID: 0}
     - target: {fileID: 2119771413082670425, guid: 55a0e0fe7dac2844299349420cd4df12, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2153,6 +2206,10 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2478651421899141388, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4824623895934705188, guid: de73661888cd0a646943971f9e3670f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.014620021
@@ -2198,13 +2255,35 @@ PrefabInstance:
       value: ClassicRacket
       objectReference: {fileID: 0}
     - target: {fileID: 5314055642078299294, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5314055642078299294, guid: de73661888cd0a646943971f9e3670f9, type: 3}
       propertyPath: m_TagString
       value: Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794525292500851779, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794525292500851779, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      propertyPath: m_TagString
+      value: Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7231282586348530818, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5794525292500851779, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 663899101}
+    - targetCorrespondingSourceObject: {fileID: 5794525292500851779, guid: de73661888cd0a646943971f9e3670f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 663899102}
   m_SourcePrefab: {fileID: 100100000, guid: de73661888cd0a646943971f9e3670f9, type: 3}
 --- !u!4 &2054618384 stripped
 Transform:

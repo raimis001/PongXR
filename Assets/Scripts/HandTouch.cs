@@ -14,8 +14,12 @@ public class HandTouch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
+    }
+    private void OnTriggerStay(Collider other)
+    {
         XRHand otherHand = other.GetComponentInParent<XRHand>();
-        if (otherHand != null) 
+        if (otherHand != null)
             OnHand.Invoke(otherHand);
 
         hand.ShowText(other.name);
