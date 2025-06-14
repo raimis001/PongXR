@@ -12,6 +12,7 @@ public class ball : MonoBehaviour
 
     // NEW: Variable for the specific speed the paddle launches the ball with
     public float paddleLaunchSpeed = 10f; // Set a default value, adjust in Inspector
+    public float wallBounceSpeed = 20f; // Set a default value, adjust in Inspector
 
     public Transform playerPaddle; // Reference to the player's paddle script
 
@@ -117,7 +118,7 @@ public class ball : MonoBehaviour
                 Vector3 directionToPlayer = (destination - transform.position).normalized;
 
                 // Wall hits still launch at paddleLaunchSpeed, homing towards the player.
-                Vector3 newVelocity = directionToPlayer * paddleLaunchSpeed;
+                Vector3 newVelocity = directionToPlayer * wallBounceSpeed;
 
                 body.linearVelocity = newVelocity;
                 body.angularVelocity = Vector3.zero; // Stop spin for predictable homing
