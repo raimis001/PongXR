@@ -23,7 +23,7 @@ public class HandControll : MonoBehaviour
 
     public void onPermissionGranted(string grantTxt)
     {
-        ShowText(grantTxt);
+        //ShowText(grantTxt);
     }
 
     private void Update()
