@@ -38,6 +38,7 @@ namespace UnityEngine.XR.OpenXR.Features.Meta.Tests
 
                 Debug.Log($"Requesting permission for: {m_PermissionId}");
                 Permission.RequestUserPermission(m_PermissionId, callbacks);
+                
             }
         }
 

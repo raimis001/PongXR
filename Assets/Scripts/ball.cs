@@ -19,6 +19,8 @@ public class ball : MonoBehaviour
 
     public Transform playerPaddle; // Reference to the player's paddle script
 
+
+    public AudioSource bounceSound;
     public float playerHeight = 1f;
     int SurfaceCount = 0; // Counter for surface hits
     public Transform ballResetPosition;
@@ -88,6 +90,7 @@ public class ball : MonoBehaviour
         {
             Rigidbody paddleRb = collision.rigidbody; // Get the Rigidbody component of the collided paddle
             SurfaceCount = 0;
+            bounceSound.Play(); // Play bounce sound on paddle hit
             if (paddleRb != null)
             {
                 ContactPoint contact = collision.contacts[0];
@@ -119,7 +122,7 @@ public class ball : MonoBehaviour
         else if (collision.gameObject.CompareTag("Wall"))
         {
             // --- WALL HIT LOGIC: SIMULATED HOMING HIT (SIMPLIFIED) ---
-
+            bounceSound.Play(); // Play bounce sound on wall hit
             if (playerPaddle != null) // Essential check to prevent NullReferenceException
             {
                 Vector3 destination = playerPaddle.position + Vector3.up * playerHeight;
@@ -183,11 +186,13 @@ public class ball : MonoBehaviour
                 }
             }
             SurfaceCount++; // Increment surface hit count
+            bounceSound.Play(); // Play bounce sound on surface hit
         }
         else if (collision.gameObject.CompareTag("Surface2"))
         {
            
             SurfaceCount = 0;
+            bounceSound.Play(); // Play bounce sound on surface hit
 
         }
 
