@@ -5,6 +5,7 @@ using UnityEngine;
 public class ball : MonoBehaviour
 {
     public static int score = 0; // Static variable to keep track of the score
+    public static int scoreMax = 0; // Static variable to keep track of the score
     public float initialBallForce = 50f;
     public float ballSpeedMultiplier = 1.1f;
     public float minBallSpeed = 7f;
@@ -173,8 +174,14 @@ public class ball : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Surface"))
         {
-            if (SurfaceCount ==0) 
+            if (SurfaceCount ==0)
+            {
                 score++; // Increment score when hitting the surface
+                if (score > scoreMax)
+                {
+                    scoreMax = score; // Update max score if current score exceeds it
+                }
+            }
             SurfaceCount++; // Increment surface hit count
         }
         else if (collision.gameObject.CompareTag("Surface2"))
