@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ball : MonoBehaviour
 {
+    public static int score = 0; // Static variable to keep track of the score
     public float initialBallForce = 50f;
     public float ballSpeedMultiplier = 1.1f;
     public float minBallSpeed = 7f;
     public float paddleVelocityInfluence = 0.5f;
-
+    
     public float paddleLaunchSpeed = 10f; // Set a default value, adjust in Inspector
     public float wallBounceSpeed = 15f; // Set a default value, adjust in Inspector
 
@@ -18,7 +19,7 @@ public class ball : MonoBehaviour
     public Transform playerPaddle; // Reference to the player's paddle script
 
     public float playerHeight = 1f;
-
+    int SurfaceCount = 0; // Counter for surface hits
     public Transform ballResetPosition;
     private Vector3 initialBallPosition;
     private Quaternion initialBallRotation;
@@ -30,7 +31,7 @@ public class ball : MonoBehaviour
         body = GetComponent<Rigidbody>();
         body.useGravity = false;
         body.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
+        body.isKinematic = true; // Initially set to kinematic to prevent physics interference
         initialBallPosition = transform.position;
         initialBallRotation = transform.rotation;
 
@@ -52,6 +53,7 @@ public class ball : MonoBehaviour
 
     public void DropBall()
     {
+        body.isKinematic = false; // Disable kinematic to allow physics interaction
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
         body.useGravity = true; // Enable gravity for dropping
@@ -62,7 +64,9 @@ public class ball : MonoBehaviour
         body.linearVelocity = Vector3.zero;
         body.angularVelocity = Vector3.zero;
         body.useGravity = false;
-
+        body.isKinematic = true;
+        score =0; // Reset score when the ball is reset
+        SurfaceCount = 0; // Reset surface hit count
         if (ballResetPosition != null)
         {
             transform.position = ballResetPosition.position;
@@ -82,7 +86,7 @@ public class ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Paddle"))
         {
             Rigidbody paddleRb = collision.rigidbody; // Get the Rigidbody component of the collided paddle
-
+            SurfaceCount = 0;
             if (paddleRb != null)
             {
                 ContactPoint contact = collision.contacts[0];
@@ -139,6 +143,7 @@ public class ball : MonoBehaviour
 
                 Debug.Log("Ball hit wall and is now homing towards player with defined speed!");
             }
+
             else
             {
                 // Fallback: If playerPaddle is NOT assigned, reflect as before, but with min/max speed guarantee.
@@ -162,16 +167,23 @@ public class ball : MonoBehaviour
                 Debug.LogWarning("Player Paddle not assigned to ball script! Ball reflected off wall instead of homing.");
             }
         }
-        void OnTriggerEnter(Collider other)
+        else if (collision.gameObject.CompareTag("ResetZone"))
         {
-            // Check if the collider that entered the trigger has the "ResetZone" tag.
-            // Make sure your cube GameObject has this tag applied in the Inspector!
-            if (other.CompareTag("ResetZone"))
-            {
-                Debug.Log("Ball entered ResetZone. Resetting ball...");
-                ResetBall(); // Call the ResetBall function defined in this script.
-            }
+            ResetBall(); // Reset the ball if it collides with the ResetZone
         }
+        else if (collision.gameObject.CompareTag("Surface"))
+        {
+            if (SurfaceCount ==0) 
+                score++; // Increment score when hitting the surface
+            SurfaceCount++; // Increment surface hit count
+        }
+        else if (collision.gameObject.CompareTag("Surface2"))
+        {
+           
+            SurfaceCount = 0;
+
+        }
+
     }
 }
     

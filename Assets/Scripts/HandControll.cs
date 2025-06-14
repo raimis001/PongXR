@@ -26,20 +26,7 @@ public class HandControll : MonoBehaviour
         //ShowText(grantTxt);
     }
 
-    private void Update()
-    {
-        if (hand.kind != UnityEngine.XR.XRNode.RightHand)
-            return;
 
-        if (hand.triggerDown)
-        {
-            bumba.DropBall();
-        }
-        if (hand.gripDown)
-        {
-            bumba.ResetBall();
-        }
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
