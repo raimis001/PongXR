@@ -7,6 +7,12 @@
       "dependencies": {},
       "hash": "4b9a889668fa261945b2ba0abfa6063941ffa0bc"
     },
+    "com.merry-yellow.code-assist": {
+      "version": "file:com.merry-yellow.code-assist",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.meta.xr.mrutilitykit": {
       "version": "77.0.0",
       "depth": 1,
