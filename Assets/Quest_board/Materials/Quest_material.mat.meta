@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 01e938d1fb45cc54ca8622d2121df4f5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 150950
+  packageName: Quest board
+  packageVersion: 1.0
+  assetPath: Assets/Quest_board/Materials/Quest_material.mat
+  uploadId: 321789

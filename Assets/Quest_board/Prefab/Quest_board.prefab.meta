@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d05decb51290aef45a335fd0e4bbb611
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 150950
+  packageName: Quest board
+  packageVersion: 1.0
+  assetPath: Assets/Quest_board/Prefab/Quest_board.prefab
+  uploadId: 321789

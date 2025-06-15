@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 67195ba82ac04e241b9fc4704d26b36d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 150950
+  packageName: Quest board
+  packageVersion: 1.0
+  assetPath: Assets/Quest_board/Materials/Quest_material_Opacity.mat
+  uploadId: 321789
