@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.aog.xrmanager": "https://github.com/raimis001/XRManagment.git?path=/Assets/__GAME/",
+    "com.meta.xr.sdk.all": "77.0.0",
     "com.unity.ai.navigation": "2.0.8",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.entities.graphics": "1.4.12",

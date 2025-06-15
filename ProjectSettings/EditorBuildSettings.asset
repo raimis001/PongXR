@@ -8,12 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NetcodeForEntitiesSetup/Scenes/ConnectionUI.unity
     guid: 835aa8d22c3c2314588896f4a0ffd487
+  - enabled: 1
+    path: Assets/Scenes/Crowd.unity
+    guid: 0bc58eb92a7393c45959b115a6fa792e
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/NetcodeForEntitiesSetup/Scenes/Gameplay.unity
     guid: 9a2a8195b2523984b98f9a51ac219b5c
+  - enabled: 0
+    path: Assets/NetcodeForEntitiesSetup/Scenes/GameplaySubScene.unity
+    guid: 4cb94997cbd66874bab177f349973433
+  - enabled: 1
+    path: Assets/NetcodeForEntitiesSetup/Scenes/ConnectionUI.unity
+    guid: 835aa8d22c3c2314588896f4a0ffd487
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 47632823c961f414885641d078ed16e0, type: 2}

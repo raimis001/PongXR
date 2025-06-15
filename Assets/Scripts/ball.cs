@@ -21,6 +21,7 @@ public class ball : MonoBehaviour
 
 
     public AudioSource bounceSound;
+    public AudioSource wowSound;
     public float playerHeight = 1f;
     int SurfaceCount = 0; // Counter for surface hits
     public Transform ballResetPosition;
@@ -183,6 +184,7 @@ public class ball : MonoBehaviour
                 if (score > scoreMax)
                 {
                     scoreMax = score; // Update max score if current score exceeds it
+                    wowSound.Play(); // Play wow sound when max score is updated
                 }
             }
             SurfaceCount++; // Increment surface hit count
